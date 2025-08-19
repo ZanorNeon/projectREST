@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46bec020-dc53-4042-a3cb-1541c933fc5d" name="Changes" comment="Initial Commit.">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+    <list default="true" id="46bec020-dc53-4042-a3cb-1541c933fc5d" name="Changes" comment="Initial Work Branch Commit.">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projectREST/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/projectREST/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projectREST/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/projectREST/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projectREST/src/main/java/com/example/projectREST/ProjectRestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/projectREST/src/main/java/com/example/projectREST/ProjectRestApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,23 +17,28 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ZanorNeon"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ZanorNeon&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ZanorNeon/projectREST.git",
-    "accountId": "1e7f45a4-526c-4c78-9aef-24407bf3b9c7"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ZanorNeon/projectREST.git&quot;,
+    &quot;accountId&quot;: &quot;1e7f45a4-526c-4c78-9aef-24407bf3b9c7&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="31VpjgWCa3g9tIuaRa3W6Zd4liQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -40,7 +48,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "workbranch",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
@@ -69,11 +78,36 @@
       <option name="project" value="LOCAL" />
       <updated>1755619693144</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Initial Commit.">
+      <option name="closed" value="true" />
+      <created>1755619952206</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1755619952206</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Initial Commit.">
+      <option name="closed" value="true" />
+      <created>1755620036071</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755620036071</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Initial Work Branch Commit.">
+      <option name="closed" value="true" />
+      <created>1755620166592</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1755620166592</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit." />
+    <MESSAGE value="Initial Work Branch Commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Work Branch Commit." />
   </component>
 </project>
