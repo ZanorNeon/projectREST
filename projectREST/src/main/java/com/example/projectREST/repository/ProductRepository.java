@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
     static Specification<Product> filter(BigDecimal minPrice, BigDecimal maxPrice, Long categoryId, Boolean active, String q) {
+        return null;
     }
 
     Optional<Product> findBySlug(String slug);
