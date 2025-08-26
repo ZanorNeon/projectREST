@@ -15,7 +15,6 @@ import javax.management.relation.Role;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -47,7 +46,7 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public User(Long id, String email, String password, String fullName, Boolean enabled, Instant createdAt, Set<Role> roles) {
+    public User() {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -56,6 +55,7 @@ public class User {
         this.createdAt = createdAt;
         this.roles = roles;
     }
+
 
     public Long getId() {
         return id;

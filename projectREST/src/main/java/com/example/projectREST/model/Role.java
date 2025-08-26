@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -16,7 +15,7 @@ public class Role {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 32)
-    private String name;
+    private static String name;
 
     public Role(Long id, String name) {
         this.id = id;
@@ -31,7 +30,7 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
