@@ -15,6 +15,7 @@ import javax.management.relation.Role;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+
 @Entity
 @Table(name = "users")
 public class User {

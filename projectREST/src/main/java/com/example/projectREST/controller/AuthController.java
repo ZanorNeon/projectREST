@@ -12,26 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class AuthController {
 
-        private final AuthService authService;
+    private final AuthService authService;
 
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
 
     @PostMapping("/register")
-        public ResponseEntity<String> register(
-                @RequestParam String email,
-                @RequestParam String password,
-                @RequestParam String fullName) {
-            authService.register(email, password, fullName);
-            return ResponseEntity.ok("User registered successfully");
-        }
+    public ResponseEntity<String> register(
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String fullName) {
+        authService.register(email, password, fullName);
+        return ResponseEntity.ok("User registered successfully");
+    }
 
-        @PostMapping("/login")
-        public ResponseEntity<String> login(
-                @RequestParam String email,
-                @RequestParam String password) {
-            String token = authService.login(email, password);
-            return ResponseEntity.ok(token);
-        }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(
+            @RequestParam String email,
+            @RequestParam String password) {
+        String token = authService.login(email, password);
+        return ResponseEntity.ok(token);
+    }
 }
