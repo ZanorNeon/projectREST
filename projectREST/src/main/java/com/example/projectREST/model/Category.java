@@ -38,7 +38,7 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Product> products = new HashSet<>();
 
-    public Category(Long id, String name, String slug, String description, Instant createdAt, Instant updatedAt, Set<Product> products) {
+    public Category(Long id, String name, String slug, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -47,6 +47,7 @@ public class Category {
         this.updatedAt = updatedAt;
         this.products = products;
     }
+
 
     public Long getId() {
         return id;
