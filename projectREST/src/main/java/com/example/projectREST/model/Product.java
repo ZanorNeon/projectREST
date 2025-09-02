@@ -29,7 +29,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(nullable = false, length = 3)
-    private String currency; // ISO3 (e.g., USD, EUR)
+    private String currency;
 
     @Column(nullable = false)
     private Integer stock = 0;
@@ -39,7 +39,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    private long categoryid;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
@@ -47,7 +47,7 @@ public class Product {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
 
-    public Product(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Category category, Instant createdAt, Instant updatedAt) {
+    public Product(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Long categoryid, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -56,7 +56,7 @@ public class Product {
         this.currency = currency;
         this.stock = stock;
         this.active = active;
-        this.category = category;
+        this.categoryid = categoryid;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -125,12 +125,12 @@ public class Product {
         this.active = active;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryid;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Long category) {
+        this.categoryid = category;
     }
 
     public Instant getCreatedAt() {
@@ -160,7 +160,7 @@ public class Product {
                 ", currency='" + currency + '\'' +
                 ", stock=" + stock +
                 ", active=" + active +
-                ", category=" + category +
+                ", category=" + categoryid +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

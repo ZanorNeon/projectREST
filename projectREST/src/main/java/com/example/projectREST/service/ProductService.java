@@ -37,9 +37,9 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) {
-        Category category = categoryRepository.findById(product.getCategory().getId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-        product.setCategory(category);
+        Long category = categoryRepository.findById(product.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found")).getId();
+        product.setCategoryId(category);
         return productRepository.save(product);
     }
 
@@ -52,7 +52,7 @@ public class ProductService {
         product.setCurrency(updated.getCurrency());
         product.setStock(updated.getStock());
         product.setActive(updated.getActive());
-        product.setCategory(updated.getCategory());
+        product.setCategoryId(updated.getCategoryId());
         product.setUpdatedAt(updated.getUpdatedAt());
         return productRepository.save(product);
     }

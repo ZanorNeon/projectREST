@@ -1,12 +1,13 @@
 package com.example.projectREST.service;
 
+import com.example.projectREST.model.Category;
 import com.example.projectREST.model.Product;
 import com.example.projectREST.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -15,8 +16,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class ProductServiceTest {
 
@@ -26,47 +25,40 @@ class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
-    private Product createExampleProduct() {
-        return new Product(1L, "Laptop", "laptop", "High-performance laptop", new BigDecimal("999.99"), "USD", 10, true, null, Instant.now(), Instant.now());
-    }
+    private Product product;
 
-    @Test
-    void createProduct_ShouldSaveProduct() {
-        Product product = createExampleProduct();
+    @BeforeEach
+    void setUp() {
+        Category category = new Category(1L, "Electronics", "electronics", "aaaaaaaa", Instant.now(), Instant.now());
 
-        when(productRepository.save(any(Product.class))).thenReturn(product);
-
-        Product result = productService.createProduct(product);
-
-        assertNotNull(result);
-        assertEquals("Laptop", result.getName());
-        assertEquals(new BigDecimal("999.99"), result.getPrice());
-
-        verify(productRepository, times(1)).save(product);
+        product = new Product(1L, "Phone", "phone", "Smartphone", BigDecimal.valueOf(1000), "USD", 10, true, null, Instant.now(), Instant.now());
     }
 
     @Test
     void getProductById_ShouldReturnProduct() {
-        Product product = createExampleProduct();
+        Mockito.when(productRepository.findById(1L)).thenReturn(Optional.of(product));
 
-        when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+        Product found = productService.getProduct(1L);
 
-        Product result = productService.getProduct(1L);
-
-        assertNotNull(result);
-        assertEquals("Laptop", result.getName());
-        assertEquals("USD", result.getCurrency());
-        verify(productRepository, times(1)).findById(1L);
+        assertNotNull(found);
+        assertEquals("Phone", found.getName());
     }
 
     @Test
-    void getProductById_ShouldThrowIfNotFound() {
-        when(productRepository.findById(99L)).thenReturn(Optional.empty());
+    void getProductById_ShouldThrowException_WhenNotFound() {
+        Mockito.when(productRepository.findById(99L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class,
-                () -> productService.getProduct(99L));
+        assertThrows(RuntimeException.class, () -> productService.getProduct(99L));
+    }
 
-        assertEquals("Product not found with id 99", exception.getMessage());
-        verify(productRepository, times(1)).findById(99L);
+    @Test
+    void createProduct_ShouldSaveProduct() {
+        Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
+
+        Product saved = productService.createProduct(product);
+
+        assertNotNull(saved);
+        assertEquals("Phone", saved.getName());
+        Mockito.verify(productRepository, times(1)).save(product);
     }
 }

@@ -45,11 +45,11 @@ class ProductControllerTest {
         Page<Product> productPage = new PageImpl<>(products);
 
         Mockito.when(productService.getProducts(
-                Mockito.isNull(), // minPrice
-                Mockito.isNull(), // maxPrice
-                Mockito.isNull(), // categoryId
-                Mockito.isNull(), // active
-                Mockito.isNull(), // q
+                Mockito.isNull(),
+                Mockito.isNull(),
+                Mockito.isNull(),
+                Mockito.isNull(),
+                Mockito.isNull(),
                 Mockito.any(Pageable.class)
         )).thenReturn(productPage);
 

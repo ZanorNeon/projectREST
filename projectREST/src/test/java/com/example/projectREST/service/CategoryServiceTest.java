@@ -32,7 +32,7 @@ class CategoryServiceTest {
 
     @Test
     void createCategory_ShouldSaveCategory() {
-        Category category = new Category(1L, "Electronics", "electronics", Instant.now(), Instant.now());
+        Category category = new Category(1L, "Electronics", "electronics", "aaaaaaa", Instant.now(), Instant.now());
         category.setName("Electronics");
 
         when(categoryRepository.save(any(Category.class))).thenReturn(category);
@@ -46,7 +46,7 @@ class CategoryServiceTest {
 
     @Test
     void getCategoryById_ShouldReturnCategory() {
-        Category category = new Category(1L, "Books", "books",Instant.now(),Instant.now());
+        Category category = new Category(1L, "Books", "books", "aaaaa", Instant.now(), Instant.now());
         category.setId(1L);
         category.setName("Books");
 
