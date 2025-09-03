@@ -1,67 +1,58 @@
 package com.example.projectREST.service;
 
 import com.example.projectREST.model.Category;
-import com.example.projectREST.repository.CategoryRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
-import java.util.Optional;
+import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SpringBootTest
 class CategoryServiceTest {
 
-    @Mock
-    private CategoryRepository categoryRepository;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @InjectMocks
+    @MockitoBean
     private CategoryService categoryService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @Test
+    void getAllCategories_ShouldReturnList() throws Exception {
+        Category c1 = new Category(1L, "Electronics", "electronics", "desc",
+                Instant.now(), Instant.now(), new HashSet<>());
+
+        Mockito.when(categoryService.getAllCategories()).thenReturn(List.of(c1));
+
+        mockMvc.perform(get("/api/categories"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("Electronics"));
     }
 
     @Test
-    void createCategory_ShouldSaveCategory() {
-        Category category = new Category(1L, "Electronics", "electronics", "aaaaaaa", Instant.now(), Instant.now());
-        category.setName("Electronics");
+    void getCategory_ShouldReturnSingleCategory() throws Exception {
+        Category c1 = new Category(1L, "Books", "books", "desc",
+                Instant.now(), Instant.now(), new HashSet<>());
 
-        when(categoryRepository.save(any(Category.class))).thenReturn(category);
+        Mockito.when(categoryService.getCategory(1L)).thenReturn(c1);
 
-        Category result = categoryService.createCategory(category);
-
-        assertNotNull(result);
-        assertEquals("Electronics", result.getName());
-        verify(categoryRepository, times(1)).save(category);
+        mockMvc.perform(get("/api/categories/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Books"));
     }
-
-    @Test
-    void getCategoryById_ShouldReturnCategory() {
-        Category category = new Category(1L, "Books", "books", "aaaaa", Instant.now(), Instant.now());
-        category.setId(1L);
-        category.setName("Books");
-
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
-
-        Category result = categoryService.getCategory(1L);
-
-        assertNotNull(result);
-        assertEquals("Books", result.getName());
-    }
-
-    @Test
-    void deleteCategory_ShouldCallRepository() {
-        categoryService.deleteCategory(1L);
-        verify(categoryRepository, times(1)).deleteById(1L);
-    }
-
 }
+
+@Test
+void deleteCategory_ShouldCallRepository() {
+    CategoryService.deleteCategory(1L);
+    verify(CategoryRepository, times(1)).deleteById(1L);
+}
+

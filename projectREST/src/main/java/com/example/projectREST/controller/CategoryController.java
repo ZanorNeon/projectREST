@@ -43,7 +43,7 @@ public class CategoryController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
+    public Category updateCategory(@PathVariable Long id, @RequestBody Long category) {
         return categoryService.updateCategory(id, category);
     }
 
