@@ -1,6 +1,5 @@
 package com.example.projectREST.service;
 
-import com.example.projectREST.model.Category;
 import com.example.projectREST.model.Product;
 import com.example.projectREST.repository.CategoryRepository;
 import com.example.projectREST.repository.ProductRepository;
@@ -11,7 +10,6 @@ import java.awt.print.Pageable;
 import java.math.BigDecimal;
 
 @Service
-
 public class ProductService {
 
     private final ProductRepository productRepository;

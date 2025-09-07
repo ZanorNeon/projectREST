@@ -2,9 +2,11 @@ package com.example.projectREST.service;
 
 import com.example.projectREST.model.Category;
 import com.example.projectREST.repository.CategoryRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
