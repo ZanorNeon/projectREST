@@ -1,5 +1,7 @@
 package com.example.projectREST.exceptionhandle;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.Instant;
 
 public class ApiError {
@@ -9,6 +11,7 @@ public class ApiError {
     private String message;
     private String path;
 
+    @Autowired
     public ApiError(int status, String error, String message, String path) {
         this.timestamp = Instant.now();
         this.status = status;
