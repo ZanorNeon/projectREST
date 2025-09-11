@@ -1,6 +1,6 @@
 package com.example.projectREST.service;
 
-import com.example.projectREST.model.Category;
+import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class CategoryServiceTest {
+class CategoryEntityServiceTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -30,7 +30,7 @@ class CategoryServiceTest {
 
     @Test
     void getAllCategories_ShouldReturnList() throws Exception {
-        Category c1 = new Category(1L, "Electronics", "electronics", "desc",
+        CategoryEntity c1 = new CategoryEntity(1L, "Electronics", "electronics", "desc",
                 Instant.now(), Instant.now());
 
         Mockito.when(categoryService.getAllCategories()).thenReturn(List.of(c1));
@@ -42,7 +42,7 @@ class CategoryServiceTest {
 
     @Test
     void getCategory_ShouldReturnSingleCategory() throws Exception {
-        Category c1 = new Category(1L, "Books", "books", "desc",
+        CategoryEntity c1 = new CategoryEntity(1L, "Books", "books", "desc",
                 Instant.now(), Instant.now());
 
         Mockito.when(categoryService.getCategory(1L)).thenReturn(c1);

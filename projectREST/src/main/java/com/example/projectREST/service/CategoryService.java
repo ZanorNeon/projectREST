@@ -1,6 +1,8 @@
 package com.example.projectREST.service;
 
-import com.example.projectREST.model.Category;
+import com.example.projectREST.dto.CategoryDto;
+import com.example.projectREST.mapper.CategoryMapper;
+import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,31 +12,34 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
-    public List<Category> getAllCategories() {
+    public List<CategoryEntity> getAllCategories() {
         return categoryRepository.findAll();
     }
 
-    public Category getCategory(Long id) {
+    public CategoryEntity getCategory(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
-    public Category createCategory(Category category) {
-        return categoryRepository.save(category);
+    public CategoryEntity createCategory(CategoryDto categoryDto) {
+        CategoryEntity categoryEntity = categoryMapper.toEntity(categoryDto);
+        return categoryRepository.save(categoryEntity);
     }
 
-    public Category updateCategory(Long id, Long updated) {
-        Category category = getCategory(id);
-        category.getName();
-        category.getSlug();
-        category.getDescription();
-        category.getUpdatedAt();
-        return categoryRepository.save(category);
+    public CategoryEntity updateCategory(Long id, Long updated) {
+        CategoryEntity categoryEntity = getCategory(id);
+        categoryEntity.getName();
+        categoryEntity.getSlug();
+        categoryEntity.getDescription();
+        categoryEntity.getUpdatedAt();
+        return categoryRepository.save(categoryEntity);
     }
 
     public void deleteCategory(Long id) {

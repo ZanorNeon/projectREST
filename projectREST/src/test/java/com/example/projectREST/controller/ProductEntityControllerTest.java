@@ -1,7 +1,7 @@
 package com.example.projectREST.controller;
 
-import com.example.projectREST.model.Category;
-import com.example.projectREST.model.Product;
+import com.example.projectREST.model.CategoryEntity;
+import com.example.projectREST.model.ProductEntity;
 import com.example.projectREST.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(controllers = ProductController.class)
-class ProductControllerTest {
+class ProductEntityControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,17 +34,17 @@ class ProductControllerTest {
     @MockitoBean
     private ProductService productService;
 
-    private Category category;
+    private CategoryEntity categoryEntity;
 
     @BeforeEach
     void setup() {
-        category = new Category(1L, "Electronics", "electronics", "desc",
+        categoryEntity = new CategoryEntity(1L, "Electronics", "electronics", "desc",
                 Instant.now(), Instant.now());
     }
 
     @Test
     void getAllProducts_ShouldReturnList() throws Exception {
-        Product p = new Product(1L, "Phone", "phone", "Smartphone",
+        ProductEntity p = new ProductEntity(1L, "Phone", "phone", "Smartphone",
                 BigDecimal.valueOf(500), "USD", 10, true, null,
                 Instant.now(), Instant.now());
 

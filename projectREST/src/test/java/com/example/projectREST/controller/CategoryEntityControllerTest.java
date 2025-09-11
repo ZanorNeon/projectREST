@@ -1,6 +1,6 @@
 package com.example.projectREST.controller;
 
-import com.example.projectREST.model.Category;
+import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.service.CategoryService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(controllers = CategoryController.class)
-class CategoryControllerTest {
+class CategoryEntityControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,9 +31,9 @@ class CategoryControllerTest {
 
     @Test
     void getAllCategories_ShouldReturnList() throws Exception {
-        Category c1 = new Category(1L, "Electronics", "electronics", "All electronic items", Instant.now(), Instant.now());
-        Category c2 = new Category(2L, "Books", "books", "All kinds of books", Instant.now(), Instant.now());
-        List<Category> categories = Arrays.asList(c1, c2);
+        CategoryEntity c1 = new CategoryEntity(1L, "Electronics", "electronics", "All electronic items", Instant.now(), Instant.now());
+        CategoryEntity c2 = new CategoryEntity(2L, "Books", "books", "All kinds of books", Instant.now(), Instant.now());
+        List<CategoryEntity> categories = Arrays.asList(c1, c2);
 
         Mockito.when(categoryService.getAllCategories()).thenReturn(categories);
 
@@ -47,7 +47,7 @@ class CategoryControllerTest {
 
     @Test
     void getCategory_ShouldReturnSingleCategory() throws Exception {
-        Category c1 = new Category(1L, "Electronics", "electronics", "All electronic items", Instant.now(), Instant.now());
+        CategoryEntity c1 = new CategoryEntity(1L, "Electronics", "electronics", "All electronic items", Instant.now(), Instant.now());
 
         Mockito.when(categoryService.getCategory(1L)).thenReturn(c1);
 

@@ -1,6 +1,6 @@
 package com.example.projectREST.service;
 
-import com.example.projectREST.model.User;
+import com.example.projectREST.model.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -28,16 +28,16 @@ public class JwtProvider {
         this.jwtExpirationMs = jwtExpirationMs;
     }
 
-    public String generateToken(User user) {
+    public String generateToken(UserEntity userEntity) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
 
-        String roles = user.getRoles().stream()
+        String roles = userEntity.getRoles().stream()
                 .map(r -> r.getRoleName())
                 .collect(Collectors.joining(","));
 
         return Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(userEntity.getEmail())
                 .claim("roles", roles)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)

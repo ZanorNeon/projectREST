@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-public class Product {
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,7 +41,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    private Category categoryId;
+    private CategoryEntity categoryEntity;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
@@ -49,7 +49,7 @@ public class Product {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
 
-    public Product(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Category categoryId, Instant createdAt, Instant updatedAt) {
+    public ProductEntity(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, CategoryEntity categoryEntity, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -58,7 +58,7 @@ public class Product {
         this.currency = currency;
         this.stock = stock;
         this.active = active;
-        this.categoryId = categoryId;
+        this.categoryEntity = categoryEntity;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -127,12 +127,12 @@ public class Product {
         this.active = active;
     }
 
-    public Category getCategoryId() {
-        return categoryId;
+    public CategoryEntity getCategoryId() {
+        return categoryEntity;
     }
 
-    public void setCategoryId(Category category) {
-        this.categoryId = category;
+    public void setCategoryId(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
     }
 
     public Instant getCreatedAt() {
@@ -162,7 +162,7 @@ public class Product {
                 ", currency='" + currency + '\'' +
                 ", stock=" + stock +
                 ", active=" + active +
-                ", category=" + categoryId +
+                ", category=" + categoryEntity +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

@@ -1,7 +1,9 @@
 package com.example.projectREST.service;
 
-import com.example.projectREST.model.Category;
-import com.example.projectREST.model.Product;
+import com.example.projectREST.dto.ProductDto;
+import com.example.projectREST.mapper.ProductMapper;
+import com.example.projectREST.model.CategoryEntity;
+import com.example.projectREST.model.ProductEntity;
 import com.example.projectREST.repository.CategoryRepository;
 import com.example.projectREST.repository.ProductRepository;
 import org.springframework.data.domain.Page;
@@ -16,50 +18,56 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    private final ProductMapper productMapper;
+
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.productMapper = productMapper;
     }
 
-    public Page<Product> getProducts(BigDecimal minPrice,
-                                     BigDecimal maxPrice,
-                                     Long categoryId,
-                                     Boolean active,
-                                     String q,
-                                     Pageable pageable) {
+    public Page<ProductEntity> getProducts(BigDecimal minPrice,
+                                           BigDecimal maxPrice,
+                                           Long categoryId,
+                                           Boolean active,
+                                           String q,
+                                           Pageable pageable) {
         return productRepository.findAll(ProductRepository.filter(minPrice, maxPrice, categoryId, active, q), (org.springframework.data.domain.Pageable) pageable);
     }
 
-    public Product getProduct(Long id) {
+    public ProductEntity getProduct(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
-    public Product createProduct(Product product) {
-        Category category = categoryRepository.findById(product.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found")).getId();
-        product.setCategoryId(category);
-        return productRepository.save(product);
+    public ProductEntity createProduct(ProductDto productDto) {
+        CategoryEntity categoryEntity = categoryRepository.findById(productDto.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        ProductEntity productEntity = productMapper.toEntity(productDto); // TODO
+
+        productEntity.setCategoryId(categoryEntity);
+        return productRepository.save(productEntity);
     }
 
-    public Product updateProduct(Long id, Product updated) {
-        Product product = getProduct(id);
-        product.setName(updated.getName());
-        product.setSlug(updated.getSlug());
-        product.setDescription(updated.getDescription());
-        product.setPrice(updated.getPrice());
-        product.setCurrency(updated.getCurrency());
-        product.setStock(updated.getStock());
-        product.setActive(updated.getActive());
-        product.setCategoryId(updated.getCategoryId());
-        product.setUpdatedAt(updated.getUpdatedAt());
-        return productRepository.save(product);
+    public ProductEntity updateProduct(Long id, ProductDto productDto) { // TODO
+        ProductEntity productEntity = getProduct(id);
+        productEntity.setName(updated.getName());
+        productEntity.setSlug(updated.getSlug());
+        productEntity.setDescription(updated.getDescription());
+        productEntity.setPrice(updated.getPrice());
+        productEntity.setCurrency(updated.getCurrency());
+        productEntity.setStock(updated.getStock());
+        productEntity.setActive(updated.getActive());
+        productEntity.setCategoryId(updated.getCategoryId());
+        productEntity.setUpdatedAt(updated.getUpdatedAt());
+        return productRepository.save(productEntity);
     }
 
-    public Product updateStock(Long id, Integer stock) {
-        Product product = getProduct(id);
-        product.setStock(stock);
-        return productRepository.save(product);
+    public ProductEntity updateStock(Long id, Integer stock) {
+        ProductEntity productEntity = getProduct(id);
+        productEntity.setStock(stock);
+        return productRepository.save(productEntity);
     }
 
     public void deleteProduct(Long id) {

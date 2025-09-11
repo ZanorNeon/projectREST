@@ -1,6 +1,7 @@
 package com.example.projectREST.controller;
 
-import com.example.projectREST.model.Product;
+import com.example.projectREST.dto.ProductDto;
+import com.example.projectREST.model.ProductEntity;
 import com.example.projectREST.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,7 +32,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public Page<Product> listProducts(
+    public Page<ProductEntity> listProducts(
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) Long categoryId,
@@ -42,25 +43,25 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id) {
+    public ProductEntity getProduct(@PathVariable Long id) {
         return productService.getProduct(id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+    public ProductEntity createProduct(@RequestBody ProductDto productDto) {
+        return productService.createProduct(productDto);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
+    public ProductEntity updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        return productService.updateProduct(id, productDto);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}/stock")
-    public Product updateStock(@PathVariable Long id, @RequestParam Integer stock) {
+    public ProductEntity updateStock(@PathVariable Long id, @RequestParam Integer stock) {
         return productService.updateStock(id, stock);
     }
 

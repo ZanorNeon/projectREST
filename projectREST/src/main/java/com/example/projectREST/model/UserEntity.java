@@ -18,7 +18,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +47,7 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public User() {
+    public UserEntity() {
         this.id = id;
         this.email = email;
         this.password = password;

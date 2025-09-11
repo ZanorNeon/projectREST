@@ -1,7 +1,8 @@
 package com.example.projectREST.controller;
 
 
-import com.example.projectREST.model.Category;
+import com.example.projectREST.dto.CategoryDto;
+import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,24 +29,24 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> listCategories() {
+    public List<CategoryEntity> listCategories() {
         return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
-    public Category getCategory(@PathVariable Long id) {
+    public CategoryEntity getCategory(@PathVariable Long id) {
         return categoryService.getCategory(id);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public Category createCategory(@RequestBody Category category) {
+    public CategoryEntity createCategory(@RequestBody CategoryDto category) {
         return categoryService.createCategory(category);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Long category) {
+    public CategoryEntity updateCategory(@PathVariable Long id, @RequestBody Long category) {
         return categoryService.updateCategory(id, category);
     }
 

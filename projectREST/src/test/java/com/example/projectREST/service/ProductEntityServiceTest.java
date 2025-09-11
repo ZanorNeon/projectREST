@@ -1,7 +1,7 @@
 package com.example.projectREST.service;
 
-import com.example.projectREST.model.Category;
-import com.example.projectREST.model.Product;
+import com.example.projectREST.model.CategoryEntity;
+import com.example.projectREST.model.ProductEntity;
 import com.example.projectREST.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
-class ProductServiceTest {
+class ProductEntityServiceTest {
 
     @Mock
     private ProductRepository productRepository;
@@ -25,20 +25,20 @@ class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
-    private Product product;
+    private ProductEntity productEntity;
 
     @BeforeEach
     void setUp() {
-        Category category = new Category(1L, "Electronics", "electronics", "aaaaaaaa", Instant.now(), Instant.now());
+        CategoryEntity categoryEntity = new CategoryEntity(1L, "Electronics", "electronics", "aaaaaaaa", Instant.now(), Instant.now());
 
-        product = new Product(1L, "Phone", "phone", "Smartphone", BigDecimal.valueOf(1000), "USD", 10, true, null, Instant.now(), Instant.now());
+        productEntity = new ProductEntity(1L, "Phone", "phone", "Smartphone", BigDecimal.valueOf(1000), "USD", 10, true, null, Instant.now(), Instant.now());
     }
 
     @Test
     void getProductById_ShouldReturnProduct() {
-        Mockito.when(productRepository.findById(1L)).thenReturn(Optional.of(product));
+        Mockito.when(productRepository.findById(1L)).thenReturn(Optional.of(productEntity));
 
-        Product found = productService.getProduct(1L);
+        ProductEntity found = productService.getProduct(1L);
 
         assertNotNull(found);
         assertEquals("Phone", found.getName());
@@ -53,12 +53,12 @@ class ProductServiceTest {
 
     @Test
     void createProduct_ShouldSaveProduct() {
-        Mockito.when(productRepository.save(any(Product.class))).thenReturn(product);
+        Mockito.when(productRepository.save(any(ProductEntity.class))).thenReturn(productEntity);
 
-        Product saved = productService.createProduct(product);
+        ProductEntity saved = productService.createProduct(productEntity);
 
         assertNotNull(saved);
         assertEquals("Phone", saved.getName());
-        Mockito.verify(productRepository, times(1)).save(product);
+        Mockito.verify(productRepository, times(1)).save(productEntity);
     }
 }

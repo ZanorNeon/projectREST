@@ -1,6 +1,6 @@
 package com.example.projectREST.service;
 
-import com.example.projectREST.model.User;
+import com.example.projectREST.model.UserEntity;
 import com.example.projectREST.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,7 +11,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,11 +41,11 @@ class AuthServiceTest {
         Mockito.when(userRepository.existsByEmail(email)).thenReturn(false);
         Mockito.when(passwordEncoder.encode(password)).thenReturn("hashed");
 
-        User user = authService.register(email, password, fullname);
+        UserEntity userEntity = authService.register(email, password, fullname);
 
-        assertEquals(email, user.getEmail());
-        assertEquals("hashed", user.getPassword());
-        verify(userRepository).save(user);
+        assertEquals(email, userEntity.getEmail());
+        assertEquals("hashed", userEntity.getPassword());
+        verify(userRepository).save(userEntity);
     }
 
     @Test
@@ -63,10 +62,10 @@ class AuthServiceTest {
     void login_ShouldReturnToken_WhenValidCredentials() {
         String email = "user@mail.com";
         String rawPassword = "secret";
-        User user = new User();
+        UserEntity userEntity = new UserEntity();
 
-        Mockito.when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
-        Mockito.when(passwordEncoder.matches(rawPassword, user.getPassword())).thenReturn(true);
+        Mockito.when(userRepository.findByEmail(email)).thenReturn(Optional.of(userEntity));
+        Mockito.when(passwordEncoder.matches(rawPassword, userEntity.getPassword())).thenReturn(true);
 
         String token = authService.login(email, rawPassword);
 
@@ -86,10 +85,10 @@ class AuthServiceTest {
     @Test
     void login_ShouldThrow_WhenPasswordInvalid() {
         String email = "user@mail.com";
-        User user = new User();
+        UserEntity userEntity = new UserEntity();
 
-        Mockito.when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
-        Mockito.when(passwordEncoder.matches("wrong", user.getPassword())).thenReturn(false);
+        Mockito.when(userRepository.findByEmail(email)).thenReturn(Optional.of(userEntity));
+        Mockito.when(passwordEncoder.matches("wrong", userEntity.getPassword())).thenReturn(false);
 
         assertThrows(RuntimeException.class,
                 () -> authService.login(email, "wrong"));

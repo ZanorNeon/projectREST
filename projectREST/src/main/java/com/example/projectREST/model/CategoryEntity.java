@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,9 +36,9 @@ public class Category {
     private Instant updatedAt = Instant.now();
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Product> products = new HashSet<>();
+    private Set<ProductEntity> productEntities = new HashSet<>();
 
-    public Category(Long id, String name, String slug, String description, Instant createdAt, Instant updatedAt) {
+    public CategoryEntity(Long id, String name, String slug, String description, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -97,7 +97,7 @@ public class Category {
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", products=" + products +
+                ", products=" + productEntities +
                 '}';
     }
 }

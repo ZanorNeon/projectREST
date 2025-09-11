@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class Role {
     @Column(nullable = false, unique = true, length = 32)
     private static String name;
 
-    public Role(Long id, String name) {
+    public RoleEntity(Long id, String name) {
         this.id = id;
         this.name = name;
     }

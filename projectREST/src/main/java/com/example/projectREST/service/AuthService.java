@@ -1,7 +1,7 @@
 package com.example.projectREST.service;
 
-import com.example.projectREST.model.Role;
-import com.example.projectREST.model.User;
+import com.example.projectREST.model.RoleEntity;
+import com.example.projectREST.model.UserEntity;
 import com.example.projectREST.repository.RoleRepository;
 import com.example.projectREST.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,34 +23,34 @@ public class AuthService {
         this.jwtProvider = jwtProvider;
     }
 
-    public User register(String email, String password, String fullName) {
+    public UserEntity register(String email, String password, String fullName) {
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already in use");
         }
 
-        Role userRole = roleRepository.findByName("USER")
+        RoleEntity userRoleEntity = roleRepository.findByName("USER")
                 .orElseThrow(() -> new RuntimeException("Role USER not found"));
 
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setFullName(fullName);
-        user.setEnabled(true);
-        user.setRoles(Set.of());
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(email);
+        userEntity.setPassword(passwordEncoder.encode(password));
+        userEntity.setFullName(fullName);
+        userEntity.setEnabled(true);
+        userEntity.setRoles(Set.of());
 
-        userRepository.save(user);
-        return user;
+        userRepository.save(userEntity);
+        return userEntity;
     }
 
     public String login(String email, String password) {
-        User user = userRepository.findByEmail(email)
+        UserEntity userEntity = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(password, userEntity.getPassword())) {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
-        return jwtProvider.generateToken(user);
+        return jwtProvider.generateToken(userEntity);
     }
 
 }
