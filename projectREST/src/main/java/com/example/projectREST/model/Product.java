@@ -41,7 +41,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    private long categoryid;
+    private Category categoryId;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
@@ -49,7 +49,7 @@ public class Product {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
 
-    public Product(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Long categoryid, Instant createdAt, Instant updatedAt) {
+    public Product(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Category categoryId, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -58,7 +58,7 @@ public class Product {
         this.currency = currency;
         this.stock = stock;
         this.active = active;
-        this.categoryid = categoryid;
+        this.categoryId = categoryId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -127,12 +127,12 @@ public class Product {
         this.active = active;
     }
 
-    public Long getCategoryId() {
-        return categoryid;
+    public Category getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategoryId(Long category) {
-        this.categoryid = category;
+    public void setCategoryId(Category category) {
+        this.categoryId = category;
     }
 
     public Instant getCreatedAt() {
@@ -162,7 +162,7 @@ public class Product {
                 ", currency='" + currency + '\'' +
                 ", stock=" + stock +
                 ", active=" + active +
-                ", category=" + categoryid +
+                ", category=" + categoryId +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

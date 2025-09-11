@@ -1,5 +1,6 @@
 package com.example.projectREST.service;
 
+import com.example.projectREST.model.Category;
 import com.example.projectREST.model.Product;
 import com.example.projectREST.repository.CategoryRepository;
 import com.example.projectREST.repository.ProductRepository;
@@ -35,7 +36,7 @@ public class ProductService {
     }
 
     public Product createProduct(Product product) {
-        Long category = categoryRepository.findById(product.getCategoryId())
+        Category category = categoryRepository.findById(product.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found")).getId();
         product.setCategoryId(category);
         return productRepository.save(product);
