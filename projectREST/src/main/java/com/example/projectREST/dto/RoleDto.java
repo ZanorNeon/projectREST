@@ -2,6 +2,11 @@ package com.example.projectREST.dto;
 
 public class RoleDto {
 
+    public RoleDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     private Long id;
     private String name;
 

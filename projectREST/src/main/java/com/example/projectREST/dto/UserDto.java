@@ -2,6 +2,14 @@ package com.example.projectREST.dto;
 
 public class UserDto {
 
+    public UserDto(Long id, String email, String password, String fullName, Boolean enabled) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.enabled = enabled;
+    }
+
     private Long id;
     private String email;
     private String password;

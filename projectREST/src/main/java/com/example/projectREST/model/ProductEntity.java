@@ -49,7 +49,14 @@ public class ProductEntity {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
 
-    public ProductEntity(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, CategoryEntity categoryEntity, Instant createdAt, Instant updatedAt) {
+    public CategoryEntity getCategoryEntity() {
+        return categoryEntity;
+    }
+
+    @Column(name = "category_id", nullable = false)
+    private Long categoryId;
+
+    public ProductEntity(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Instant createdAt, Instant updatedAt, Long categoryId) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -58,10 +65,11 @@ public class ProductEntity {
         this.currency = currency;
         this.stock = stock;
         this.active = active;
-        this.categoryEntity = categoryEntity;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.categoryId = categoryId;
     }
+
 
     public Long getId() {
         return id;
@@ -127,8 +135,8 @@ public class ProductEntity {
         this.active = active;
     }
 
-    public CategoryEntity getCategoryId() {
-        return categoryEntity;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
     public void setCategoryId(CategoryEntity categoryEntity) {
@@ -151,9 +159,18 @@ public class ProductEntity {
         this.updatedAt = updatedAt;
     }
 
+
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", slug='" + slug + '\'' +
@@ -162,9 +179,10 @@ public class ProductEntity {
                 ", currency='" + currency + '\'' +
                 ", stock=" + stock +
                 ", active=" + active +
-                ", category=" + categoryEntity +
+                ", categoryEntity=" + categoryEntity +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", categoryId=" + categoryId +
                 '}';
     }
 }

@@ -1,13 +1,18 @@
 package com.example.projectREST.dto;
 
-import java.time.Instant;
-
 public class CategoryDto {
 
     private Long id;
     private String name;
     private String slug;
     private String description;
+
+    public CategoryDto(Long id, String name, String slug, String description) {
+        this.id = id;
+        this.name = name;
+        this.slug = slug;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;

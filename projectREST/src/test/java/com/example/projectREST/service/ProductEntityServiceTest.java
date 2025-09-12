@@ -31,7 +31,7 @@ class ProductEntityServiceTest {
     void setUp() {
         CategoryEntity categoryEntity = new CategoryEntity(1L, "Electronics", "electronics", "aaaaaaaa", Instant.now(), Instant.now());
 
-        productEntity = new ProductEntity(1L, "Phone", "phone", "Smartphone", BigDecimal.valueOf(1000), "USD", 10, true, null, Instant.now(), Instant.now());
+        productEntity = new ProductEntity(1L, "Phone", "phone", "Smartphone", BigDecimal.valueOf(1000), "USD", 10, true, Instant.now(), Instant.now(), null);
     }
 
     @Test

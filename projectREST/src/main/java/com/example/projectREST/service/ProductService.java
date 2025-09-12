@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Service
 public class ProductService {
@@ -40,37 +41,54 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
-    public ProductEntity createProduct(ProductDto productDto) {
+    public ProductEntity createProduct(ProductEntity productDto) {
         CategoryEntity categoryEntity = categoryRepository.findById(productDto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        ProductEntity productEntity = productMapper.toEntity(productDto); // TODO
+        ProductEntity productEntity = productMapper.toEntity(productDto);
 
         productEntity.setCategoryId(categoryEntity);
+        productEntity.setCreatedAt(Instant.now());
+        productEntity.setUpdatedAt(Instant.now());
+
         return productRepository.save(productEntity);
     }
 
-    public ProductEntity updateProduct(Long id, ProductDto productDto) { // TODO
+    public ProductEntity updateProduct(Long id, ProductDto productDto) {
         ProductEntity productEntity = getProduct(id);
-        productEntity.setName(updated.getName());
-        productEntity.setSlug(updated.getSlug());
-        productEntity.setDescription(updated.getDescription());
-        productEntity.setPrice(updated.getPrice());
-        productEntity.setCurrency(updated.getCurrency());
-        productEntity.setStock(updated.getStock());
-        productEntity.setActive(updated.getActive());
-        productEntity.setCategoryId(updated.getCategoryId());
-        productEntity.setUpdatedAt(updated.getUpdatedAt());
-        return productRepository.save(productEntity);
-    }
 
-    public ProductEntity updateStock(Long id, Integer stock) {
-        ProductEntity productEntity = getProduct(id);
-        productEntity.setStock(stock);
-        return productRepository.save(productEntity);
+        productEntity.setName(productDto.getName());
+        productEntity.setSlug(productDto.getSlug());
+        productEntity.setDescription(productDto.getDescription());
+        productEntity.setPrice(productDto.getPrice());
+        productEntity.setCurrency(productDto.getCurrency());
+        productEntity.setStock(productDto.getStock());
+        productEntity.setActive(productDto.getActive());
+        productEntity.setUpdatedAt(Instant.now());
+
+        if (productDto.getCategoryId() != null) {
+            CategoryEntity categoryEntity = categoryRepository.findById(productDto.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+            productEntity.setCategoryId(categoryEntity);
+        }
+
+            public ProductEntity updateStock(Long id, Integer stock) {
+                if (false) {
+                    throw new IllegalArgumentException("Stock must not be null");
+                }
+                if (stock < 0) {
+                    throw new IllegalArgumentException("Stock must be >= 0");
+                }
+            productEntity.setStock(stock);
+            productEntity.setUpdatedAt(Instant.now());
+            return productRepository.save(productEntity);
+        }
     }
 
     public void deleteProduct(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new RuntimeException("Product not found with id: " + id);
+        }
         productRepository.deleteById(id);
     }
 }
