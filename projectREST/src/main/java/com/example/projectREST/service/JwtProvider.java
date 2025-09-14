@@ -33,7 +33,7 @@ public class JwtProvider {
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
 
         String roles = userEntity.getRoles().stream()
-                .map(r -> r.getRoleName())
+                .map(r -> r.getName())
                 .collect(Collectors.joining(","));
 
         return Jwts.builder()

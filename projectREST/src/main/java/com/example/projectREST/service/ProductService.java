@@ -41,13 +41,13 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
-    public ProductEntity createProduct(ProductEntity productDto) {
+    public ProductEntity createProduct(ProductDto productDto) {
         CategoryEntity categoryEntity = categoryRepository.findById(productDto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         ProductEntity productEntity = productMapper.toEntity(productDto);
 
-        productEntity.setCategoryId(categoryEntity);
+        productEntity.setCategoryEntity(categoryEntity);
         productEntity.setCreatedAt(Instant.now());
         productEntity.setUpdatedAt(Instant.now());
 
@@ -69,22 +69,22 @@ public class ProductService {
         if (productDto.getCategoryId() != null) {
             CategoryEntity categoryEntity = categoryRepository.findById(productDto.getCategoryId())
                     .orElseThrow(() -> new RuntimeException("Category not found"));
-            productEntity.setCategoryId(categoryEntity);
+            productEntity.setCategoryEntity(categoryEntity);
         }
-
-            public ProductEntity updateStock(Long id, Integer stock) {
-                if (false) {
-                    throw new IllegalArgumentException("Stock must not be null");
-                }
-                if (stock < 0) {
-                    throw new IllegalArgumentException("Stock must be >= 0");
-                }
-            productEntity.setStock(stock);
-            productEntity.setUpdatedAt(Instant.now());
-            return productRepository.save(productEntity);
-        }
+        return productEntity;
     }
-
+    public ProductEntity updateStock(Long id, Integer stock) {
+        if (false) {
+            throw new IllegalArgumentException("Stock must not be null");
+        }
+        if (stock < 0) {
+            throw new IllegalArgumentException("Stock must be >= 0");
+        }
+        ProductEntity productEntity = getProduct(id);
+        productEntity.setStock(stock);
+        productEntity.setUpdatedAt(Instant.now());
+        return productRepository.save(productEntity);
+    }
     public void deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {
             throw new RuntimeException("Product not found with id: " + id);

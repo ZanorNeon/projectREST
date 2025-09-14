@@ -49,14 +49,8 @@ public class ProductEntity {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
 
-    public CategoryEntity getCategoryEntity() {
-        return categoryEntity;
-    }
 
-    @Column(name = "category_id", nullable = false)
-    private Long categoryId;
-
-    public ProductEntity(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Instant createdAt, Instant updatedAt, Long categoryId) {
+    public ProductEntity(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -67,7 +61,6 @@ public class ProductEntity {
         this.active = active;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.categoryId = categoryId;
     }
 
 
@@ -135,14 +128,6 @@ public class ProductEntity {
         this.active = active;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(CategoryEntity categoryEntity) {
-        this.categoryEntity = categoryEntity;
-    }
-
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -159,13 +144,12 @@ public class ProductEntity {
         this.updatedAt = updatedAt;
     }
 
-
     public void setCategoryEntity(CategoryEntity categoryEntity) {
         this.categoryEntity = categoryEntity;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public CategoryEntity getCategoryEntity() {
+        return categoryEntity;
     }
 
     @Override
@@ -182,7 +166,6 @@ public class ProductEntity {
                 ", categoryEntity=" + categoryEntity +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", categoryId=" + categoryId +
                 '}';
     }
 }

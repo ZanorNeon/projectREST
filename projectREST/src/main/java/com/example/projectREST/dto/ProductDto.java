@@ -17,6 +17,9 @@ public class ProductDto {
     private Instant updatedAt = Instant.now();
     private Long categoryId;
 
+    public ProductDto() {
+    }
+
     public ProductDto(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Instant createdAt, Instant updatedAt, Long categoryId) {
         this.id = id;
         this.name = name;
