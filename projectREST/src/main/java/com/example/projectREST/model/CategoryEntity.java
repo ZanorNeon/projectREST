@@ -10,8 +10,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "categories")
@@ -34,9 +33,6 @@ public class CategoryEntity {
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ProductEntity> productEntities = new HashSet<>();
 
     public CategoryEntity(Long id, String name, String slug, String description, Instant createdAt, Instant updatedAt) {
         this.id = id;
@@ -97,7 +93,6 @@ public class CategoryEntity {
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", products=" + productEntities +
                 '}';
     }
 }

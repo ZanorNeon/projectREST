@@ -45,8 +45,7 @@ class ProductEntityControllerTest {
     @Test
     void getAllProducts_ShouldReturnList() throws Exception {
         ProductEntity p = new ProductEntity(1L, "Phone", "phone", "Smartphone",
-                BigDecimal.valueOf(500), "USD", 10, true, null,
-                Instant.now(), Instant.now(), 1L    );
+                BigDecimal.valueOf(500), "USD", 10, true, Instant.now(), Instant.now() );
 
         Mockito.when(productService.getProducts(null, null, null, null, null, (Pageable) PageRequest.of(0, 20)))
                 .thenReturn(new PageImpl<>(List.of(p)));
