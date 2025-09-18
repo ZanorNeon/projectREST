@@ -18,6 +18,8 @@ public class RoleEntity {
     @Column(nullable = false, unique = true, length = 32)
     private String name;
 
+    public RoleEntity() {}
+
     public RoleEntity(Long id, String name) {
         this.id = id;
         this.name = name;

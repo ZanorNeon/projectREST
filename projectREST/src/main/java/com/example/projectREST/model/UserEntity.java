@@ -47,7 +47,9 @@ public class UserEntity {
     )
     private Set<RoleEntity> roles = new HashSet<>();
 
-    public UserEntity() {
+    public UserEntity() {}
+
+    public UserEntity(Long id, String email, String password, String fullName, Boolean enabled, Instant createdAt, Set<RoleEntity> roles) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -56,7 +58,6 @@ public class UserEntity {
         this.createdAt = createdAt;
         this.roles = roles;
     }
-
 
     public Long getId() {
         return id;
