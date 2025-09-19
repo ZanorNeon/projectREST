@@ -11,7 +11,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-import javax.management.relation.Role;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
