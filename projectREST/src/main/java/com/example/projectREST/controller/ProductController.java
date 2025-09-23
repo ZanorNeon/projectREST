@@ -48,7 +48,7 @@ public class ProductController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
+    @PostMapping("/{id}")
     public ProductEntity createProduct(@RequestBody ProductDto productDto) {
         return productService.createProduct(productDto);
     }
