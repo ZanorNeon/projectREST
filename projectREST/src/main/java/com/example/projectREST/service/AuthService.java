@@ -23,7 +23,7 @@ public class AuthService {
         this.jwtProvider = jwtProvider;
     }
 
-    public UserEntity register(String email, String password, String fullName) {
+    public UserEntity register(String email, String password, String fullName, String role) {
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already in use");
         }

@@ -31,6 +31,7 @@ class AuthServiceTest {
     //Mock
     @Autowired
     private AuthService authService;
+    private String roleId;
 
     @Test
     void register_ShouldCreateNewUser_WhenEmailNotTaken() {
@@ -41,7 +42,7 @@ class AuthServiceTest {
         Mockito.when(userRepository.existsByEmail(email)).thenReturn(false);
         Mockito.when(passwordEncoder.encode(password)).thenReturn("hashed");
 
-        UserEntity userEntity = authService.register(email, password, fullname);
+        UserEntity userEntity = authService.register(email, password, fullname, roleId);
 
         assertEquals(email, userEntity.getEmail());
         assertEquals("hashed", userEntity.getPassword());
@@ -55,7 +56,7 @@ class AuthServiceTest {
         Mockito.when(userRepository.existsByEmail(email)).thenReturn(true);
 
         assertThrows(RuntimeException.class,
-                () -> authService.register(email, "secret", "Jane Doe"));
+                () -> authService.register(email, "secret", "Jane Doe", roleId));
     }
 
     @Test

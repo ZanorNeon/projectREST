@@ -23,8 +23,9 @@ public class AuthController {
     public ResponseEntity<String> register(
             @RequestParam String email,
             @RequestParam String password,
-            @RequestParam String fullName) {
-        authService.register(email, password, fullName);
+            @RequestParam String fullName,
+            @RequestParam Long roleId) {
+        authService.register(email, password, fullName, String.valueOf(roleId));
         return ResponseEntity.ok("User registered successfully");
     }
 
