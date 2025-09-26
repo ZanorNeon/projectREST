@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
 import java.math.BigDecimal;
 
 @RestController
@@ -41,7 +41,6 @@ public class ProductController {
             Pageable pageable) {
         return productService.getProducts(minPrice, maxPrice, categoryId, active, q, pageable);
     }
-
     @GetMapping("/{id}")
     public ProductEntity getProduct(@PathVariable Long id) {
         return productService.getProduct(id);

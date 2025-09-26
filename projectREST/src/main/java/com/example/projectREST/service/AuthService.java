@@ -23,12 +23,12 @@ public class AuthService {
         this.jwtProvider = jwtProvider;
     }
 
-    public UserEntity register(String email, String password, String fullName, String role) {
+    public UserEntity register(String email, String password, String fullName) {
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already in use");
         }
 
-        RoleEntity userRoleEntity = roleRepository.findByName("USER")
+        RoleEntity userRoleEntity = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Role USER not found"));
 
         UserEntity userEntity = new UserEntity();
@@ -36,7 +36,7 @@ public class AuthService {
         userEntity.setPassword(passwordEncoder.encode(password));
         userEntity.setFullName(fullName);
         userEntity.setEnabled(true);
-        userEntity.setRoles(Set.of());
+        userEntity.setRoles(Set.of(userRoleEntity));
 
         userRepository.save(userEntity);
         return userEntity;

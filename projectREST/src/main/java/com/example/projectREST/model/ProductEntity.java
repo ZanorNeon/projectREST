@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "products")
 public class ProductEntity {
     @Id
@@ -50,6 +52,9 @@ public class ProductEntity {
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
+
+    public ProductEntity() {
+    }
 
     public ProductEntity(Long id, String name, String slug, String description, BigDecimal price, String currency, Integer stock, Boolean active, Instant createdAt, Instant updatedAt) {
         this.id = id;

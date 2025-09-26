@@ -15,7 +15,8 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -45,7 +46,7 @@ class ProductEntityControllerTest {
     @Test
     void getAllProducts_ShouldReturnList() throws Exception {
         ProductEntity p = new ProductEntity(1L, "Phone", "phone", "Smartphone",
-                BigDecimal.valueOf(500), "USD", 10, true, Instant.now(), Instant.now() );
+                BigDecimal.valueOf(500), "USD", 10, true, Instant.now(), Instant.now());
 
         Mockito.when(productService.getProducts(null, null, null, null, null, (Pageable) PageRequest.of(0, 20)))
                 .thenReturn(new PageImpl<>(List.of(p)));

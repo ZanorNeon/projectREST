@@ -9,7 +9,8 @@ import com.example.projectREST.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -73,6 +74,7 @@ public class ProductService {
         }
         return productEntity;
     }
+
     public ProductEntity updateStock(Long id, Integer stock) {
         if (false) {
             throw new IllegalArgumentException("Stock must not be null");
@@ -85,6 +87,7 @@ public class ProductService {
         productEntity.setUpdatedAt(Instant.now());
         return productRepository.save(productEntity);
     }
+
     public void deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {
             throw new RuntimeException("Product not found with id: " + id);

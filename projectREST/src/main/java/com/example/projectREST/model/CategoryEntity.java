@@ -32,6 +32,10 @@ public class CategoryEntity {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
 
+    public CategoryEntity() {
+    }
+
+
     public CategoryEntity(Long id, String name, String slug, String description, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;

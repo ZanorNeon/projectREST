@@ -42,7 +42,7 @@ class AuthServiceTest {
         Mockito.when(userRepository.existsByEmail(email)).thenReturn(false);
         Mockito.when(passwordEncoder.encode(password)).thenReturn("hashed");
 
-        UserEntity userEntity = authService.register(email, password, fullname, roleId);
+        UserEntity userEntity = authService.register(email, password, fullname);
 
         assertEquals(email, userEntity.getEmail());
         assertEquals("hashed", userEntity.getPassword());
@@ -56,7 +56,7 @@ class AuthServiceTest {
         Mockito.when(userRepository.existsByEmail(email)).thenReturn(true);
 
         assertThrows(RuntimeException.class,
-                () -> authService.register(email, "secret", "Jane Doe", roleId));
+                () -> authService.register(email, "secret", "Jane Doe"));
     }
 
     @Test
