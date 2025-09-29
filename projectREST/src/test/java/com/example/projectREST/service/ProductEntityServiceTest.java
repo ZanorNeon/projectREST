@@ -56,7 +56,7 @@ class ProductEntityServiceTest {
     void createProduct_ShouldSaveProduct() {
         Mockito.when(productRepository.save(any(ProductEntity.class))).thenReturn(productEntity);
 
-        ProductEntity saved = productService.createProduct(new ProductDto());
+        ProductEntity saved = productService.createProduct(new ProductDto(1L, "Phone", "phone", "Smartphone", BigDecimal.valueOf(1000), "USD", 10, true, Instant.now(), Instant.now(), 1L));
 
         assertNotNull(saved);
         assertEquals("Phone", saved.getName());
