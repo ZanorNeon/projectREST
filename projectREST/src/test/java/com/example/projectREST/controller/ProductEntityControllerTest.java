@@ -35,14 +35,6 @@ class ProductEntityControllerTest {
     @MockitoBean
     private ProductService productService;
 
-    private CategoryEntity categoryEntity;
-
-    @BeforeEach
-    void setup() {
-        categoryEntity = new CategoryEntity(1L, "Electronics", "electronics", "desc",
-                Instant.now(), Instant.now());
-    }
-
     @Test
     void getAllProducts_ShouldReturnList() throws Exception {
         ProductEntity p = new ProductEntity(1L, "Phone", "phone", "Smartphone",

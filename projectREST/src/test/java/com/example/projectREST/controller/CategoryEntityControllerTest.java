@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.servlet.DispatcherServlet;
 
 
 import java.time.Instant;
@@ -22,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc(addFilters = false)
-@WebMvcTest(controllers = CategoryController.class)
+@WebMvcTest(CategoryController.class)
 class CategoryEntityControllerTest {
 
     @Autowired
@@ -39,7 +38,7 @@ class CategoryEntityControllerTest {
 
         Mockito.when(categoryService.getAllCategories()).thenReturn(categories);
 
-        mockMvc.perform(get("/api/categories")
+        mockMvc.perform(get("/api/categories/2")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(2))
@@ -53,7 +52,7 @@ class CategoryEntityControllerTest {
 
         Mockito.when(categoryService.getCategory(1L)).thenReturn(c1);
 
-        mockMvc.perform(get("/api/categories/1")
+        mockMvc.perform(get("/api/categories")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Electronics"))
