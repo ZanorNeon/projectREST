@@ -1,13 +1,18 @@
 package com.example.projectREST.controller;
 
+import com.example.projectREST.config.SecurityConfig;
 import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.service.CategoryService;
+import com.example.projectREST.service.CustomUserDetailsService;
+import com.example.projectREST.service.JwtProvider;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,7 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc(addFilters = false)
+//@Import(SecurityConfig.class)
+@AutoConfigureMockMvc
 @WebMvcTest(CategoryController.class)
 class CategoryEntityControllerTest {
 
@@ -30,7 +36,15 @@ class CategoryEntityControllerTest {
     @MockitoBean
     private CategoryService categoryService;
 
+    @MockitoBean
+    private JwtProvider jwtProvider;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
+
+
     @Test
+    @WithMockUser(username="kek@lol.com", roles = "ADMIN")
     void getAllCategories_ShouldReturnList() throws Exception {
         CategoryEntity c1 = new CategoryEntity(1L, "Electronics", "electronics", "All electronic items", Instant.now(), Instant.now());
         CategoryEntity c2 = new CategoryEntity(2L, "Books", "books", "All kinds of books", Instant.now(), Instant.now());
