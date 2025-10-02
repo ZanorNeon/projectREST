@@ -3,8 +3,11 @@ package com.example.projectREST.service;
 import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.repository.CategoryRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -18,6 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@AutoConfigureMockMvc
 class CategoryEntityServiceTest {
 
     @Autowired
@@ -25,8 +29,10 @@ class CategoryEntityServiceTest {
 
     @MockitoBean
     private CategoryService categoryService;
-    
+    @MockitoBean
     private CategoryRepository categoryRepository;
+    @MockitoBean
+    private CategoryEntity categoryEntity;
 
     @Test
     void getAllCategories_ShouldReturnList() throws Exception {
