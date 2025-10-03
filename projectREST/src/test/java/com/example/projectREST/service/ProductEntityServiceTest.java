@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -28,8 +27,9 @@ class ProductEntityServiceTest {
 
     @InjectMocks
     private ProductService productService;
-    @MockitoBean
+
     private ProductEntity productEntity;
+
 
     @BeforeEach
     void setUp() {

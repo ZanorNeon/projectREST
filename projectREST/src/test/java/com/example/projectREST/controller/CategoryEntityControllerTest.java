@@ -55,7 +55,7 @@ class CategoryEntityControllerTest {
         mockMvc.perform(get("/api/categories/2")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(2))
+                .andExpect(jsonPath("$.size(2)").value(2))
                 .andExpect(jsonPath("$[0].name").value("Electronics"))
                 .andExpect(jsonPath("$[1].name").value("Books"));
     }

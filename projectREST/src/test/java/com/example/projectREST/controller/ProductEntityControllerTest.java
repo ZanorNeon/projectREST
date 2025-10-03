@@ -1,9 +1,9 @@
 package com.example.projectREST.controller;
 
-import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.model.ProductEntity;
+import com.example.projectREST.service.CustomUserDetailsService;
+import com.example.projectREST.service.JwtProvider;
 import com.example.projectREST.service.ProductService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -25,8 +26,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc(addFilters = false)
-@WebMvcTest(controllers = ProductController.class)
+@AutoConfigureMockMvc
+@WebMvcTest(ProductController.class)
 class ProductEntityControllerTest {
 
     @Autowired
@@ -35,7 +36,14 @@ class ProductEntityControllerTest {
     @MockitoBean
     private ProductService productService;
 
+    @MockitoBean
+    private JwtProvider jwtProvider;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
+
     @Test
+    @WithMockUser(username="kek@lol.com", roles = "ADMIN")
     void getAllProducts_ShouldReturnList() throws Exception {
         ProductEntity p = new ProductEntity(1L, "Phone", "phone", "Smartphone",
                 BigDecimal.valueOf(500), "USD", 10, true, Instant.now(), Instant.now());
