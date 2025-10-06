@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -19,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class ProductEntityServiceTest {
 
     @Mock
@@ -27,6 +29,12 @@ class ProductEntityServiceTest {
 
     @InjectMocks
     private ProductService productService;
+
+    @MockitoBean
+    private JwtProvider jwtProvider;
+
+    @MockitoBean
+    private UserDetailsService UserDetailsService;
 
     private ProductEntity productEntity;
 

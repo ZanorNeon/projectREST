@@ -1,8 +1,6 @@
 package com.example.projectREST.controller;
 
-import com.example.projectREST.mapper.CategoryMapper;
 import com.example.projectREST.model.CategoryEntity;
-import com.example.projectREST.repository.CategoryRepository;
 import com.example.projectREST.service.CategoryService;
 import com.example.projectREST.service.JwtProvider;
 import org.junit.jupiter.api.Test;
@@ -52,7 +50,7 @@ class CategoryEntityControllerTest {
         mockMvc.perform(get("/api/categories")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size(2)").value(2))
+                .andExpect(jsonPath("$.size()").value(2))
                 .andExpect(jsonPath("$[0].name").value("Electronics"))
                 .andExpect(jsonPath("$[1].name").value("Books"));
     }
