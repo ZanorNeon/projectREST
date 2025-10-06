@@ -39,7 +39,7 @@ public class CategoryController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/{id}")
+    @PostMapping
     public CategoryEntity createCategory(@RequestBody CategoryDto category) {
         return categoryService.createCategory(category);
     }
