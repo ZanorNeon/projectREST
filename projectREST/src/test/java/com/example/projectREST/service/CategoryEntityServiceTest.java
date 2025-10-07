@@ -6,11 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.time.Instant;
 import java.util.List;
@@ -26,16 +26,16 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CategoryEntityServiceTest {
 
-    @MockitoBean
+    @Mock
     private CategoryRepository categoryRepository;
 
     @InjectMocks
     private CategoryService categoryService;
 
-    @MockitoBean
+    @Mock
     private JwtProvider jwtProvider;
 
-    @MockitoBean
+    @Mock
     private UserDetailsService UserDetailsService;
 
     private CategoryEntity sampleCategory;
