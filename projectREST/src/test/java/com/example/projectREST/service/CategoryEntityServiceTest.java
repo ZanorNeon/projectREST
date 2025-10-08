@@ -7,10 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.Instant;
 import java.util.List;
@@ -32,45 +30,42 @@ class CategoryEntityServiceTest {
     @InjectMocks
     private CategoryService categoryService;
 
-    @Mock
-    private JwtProvider jwtProvider;
-
-    @Mock
-    private UserDetailsService UserDetailsService;
-
     private CategoryEntity sampleCategory;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        CategoryEntity sampleCategory = new CategoryEntity(1L, "Electronics", "electronics", "desc",
+        sampleCategory = new CategoryEntity(1L, "Electronics", "electronics", "desc",
                 Instant.now(), Instant.now());
     }
 
-
-        @Test
-    void getAllCategories_ShouldReturnList() throws Exception {
-            List<CategoryEntity> categories = List.of(sampleCategory);
-            when(categoryRepository.findAll()).thenReturn(categories);
-            List<CategoryEntity> result = categoryRepository.findAll();
-            assertEquals(1, result.size());
-            verify(categoryRepository, times(1)).findAll();
-        }
-
     @Test
-    void getCategory_ShouldReturnSingleCategory() throws Exception {
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(sampleCategory));
-        Optional<CategoryEntity> result = categoryRepository.findById(1L);
-        assertNotNull(result);
-        assertEquals("Test", result.get());
+    void getAllCategories_ShouldReturnList() {
+        List<CategoryEntity> categories = List.of(sampleCategory);
+
+        when(categoryRepository.findAll()).thenReturn(categories);
+
+        List<CategoryEntity> result = categoryService.getAllCategories();
+
+        assertEquals(1, result.size());
+        assertEquals("Electronics", result.get(0).getName());
+        verify(categoryRepository, times(1)).findAll();
     }
 
+    @Test
+    void getCategory_ShouldReturnSingleCategory() {
+        when(categoryRepository.findById(1L)).thenReturn(Optional.of(sampleCategory));
+
+        CategoryEntity result = categoryService.getCategory(1L);
+
+        assertNotNull(result);
+        assertEquals("Electronics", result.getName());
+        verify(categoryRepository, times(1)).findById(1L);
+    }
 
     @Test
     void deleteCategory_ShouldCallRepository() {
-        when(categoryRepository.existsById(1L)).thenReturn(true);
         categoryService.deleteCategory(1L);
-        verify(categoryRepository).deleteById(1L);
-    }
 
+        verify(categoryRepository, times(1)).deleteById(1L);
+    }
 }
