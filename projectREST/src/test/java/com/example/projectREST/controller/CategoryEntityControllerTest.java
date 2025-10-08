@@ -31,8 +31,6 @@ class CategoryEntityControllerTest {
     @MockitoBean
     private CategoryService categoryService;
 
-    // Disable security:
-
     @MockitoBean
     private JwtProvider jwtProvider;
 

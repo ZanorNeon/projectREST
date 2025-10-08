@@ -16,19 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 
-//ExtendsWith(//Junit5)
 @SpringBootTest
 class AuthServiceTest {
 
-    //@Mock
     @MockitoBean
     private UserRepository userRepository;
 
-    //@Mock
     @MockitoBean
     private PasswordEncoder passwordEncoder;
 
-    //Mock
     @Autowired
     private AuthService authService;
     private String roleId;
