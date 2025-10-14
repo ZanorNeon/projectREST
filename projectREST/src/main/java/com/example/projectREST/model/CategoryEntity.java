@@ -1,5 +1,6 @@
 package com.example.projectREST.model;
 
+import com.example.projectREST.dto.CategoryDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

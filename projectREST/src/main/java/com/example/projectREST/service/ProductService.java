@@ -34,7 +34,7 @@ public class ProductService {
                                            Boolean active,
                                            String q,
                                            Pageable pageable) {
-        return productRepository.findAll(ProductRepository.filter(minPrice, maxPrice, categoryId, active, q), (org.springframework.data.domain.Pageable) pageable);
+        return productRepository.findAll(ProductRepository.filter(minPrice, maxPrice, categoryId, active, q), pageable);
     }
 
     public ProductEntity getProduct(Long id) {
@@ -76,9 +76,6 @@ public class ProductService {
     }
 
     public ProductEntity updateStock(Long id, Integer stock) {
-        if (false) {
-            throw new IllegalArgumentException("Stock must not be null");
-        }
         if (stock < 0) {
             throw new IllegalArgumentException("Stock must be >= 0");
         }

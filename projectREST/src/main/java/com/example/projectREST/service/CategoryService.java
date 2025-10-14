@@ -6,6 +6,7 @@ import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -33,14 +34,18 @@ public class CategoryService {
         return categoryRepository.save(categoryEntity);
     }
 
-    public CategoryEntity updateCategory(Long id, Long updated) {
+    public CategoryEntity updateCategory(Long id, CategoryDto updated) {
+
         CategoryEntity categoryEntity = getCategory(id);
-        categoryEntity.getName();
-        categoryEntity.getSlug();
-        categoryEntity.getDescription();
-        categoryEntity.getUpdatedAt();
+
+        categoryEntity.setName(updated.getName());
+        categoryEntity.setSlug(updated.getSlug());
+        categoryEntity.setDescription(updated.getDescription());
+        categoryEntity.setUpdatedAt(Instant.now());
+
         return categoryRepository.save(categoryEntity);
     }
+
 
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);

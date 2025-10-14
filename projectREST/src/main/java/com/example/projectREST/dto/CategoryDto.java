@@ -1,6 +1,8 @@
 package com.example.projectREST.dto;
 
-public class CategoryDto {
+import com.example.projectREST.model.CategoryEntity;
+
+public class CategoryDto extends CategoryEntity{
 
     private Long id;
     private String name;

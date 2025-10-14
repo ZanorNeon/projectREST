@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -24,7 +23,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 class ProductEntityServiceTest {
 
@@ -77,18 +75,18 @@ class ProductEntityServiceTest {
 
     @Test
     void createProduct_ShouldSaveProduct() {
-            ProductDto dto = new ProductDto(1L, "Phone", "phone", "Smartphone", BigDecimal.valueOf(1000), "USD", 10, true, Instant.now(), Instant.now(), 1L);
+        ProductDto dto = new ProductDto(1L, "Phone", "phone", "Smartphone", BigDecimal.valueOf(1000), "USD", 10, true, Instant.now(), Instant.now(), 1L);
 
-            Mockito.when(categoryRepository.findById(1L)).thenReturn(Optional.of(sampleCategory));
-            Mockito.when(productMapper.toEntity(dto)).thenReturn(sampleProduct);
-            Mockito.when(productRepository.save(any(ProductEntity.class))).thenReturn(sampleProduct);
+        Mockito.when(categoryRepository.findById(1L)).thenReturn(Optional.of(sampleCategory));
+        Mockito.when(productMapper.toEntity(dto)).thenReturn(sampleProduct);
+        Mockito.when(productRepository.save(any(ProductEntity.class))).thenReturn(sampleProduct);
 
-            ProductEntity saved = productService.createProduct(dto);
+        ProductEntity saved = productService.createProduct(dto);
 
-            assertNotNull(saved);
-            assertEquals("Phone", saved.getName());
-            verify(productRepository, times(1)).save(any(ProductEntity.class));
-            verify(categoryRepository, times(1)).findById(1L);
-            verify(productMapper, times(1)).toEntity(dto);
-        }
+        assertNotNull(saved);
+        assertEquals("Phone", saved.getName());
+        verify(productRepository, times(1)).save(any(ProductEntity.class));
+        verify(categoryRepository, times(1)).findById(1L);
+        verify(productMapper, times(1)).toEntity(dto);
     }
+}

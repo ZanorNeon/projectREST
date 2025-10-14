@@ -1,5 +1,6 @@
 package com.example.projectREST.service;
 
+import com.example.projectREST.dto.CategoryDto;
 import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
 import java.time.Instant;
@@ -16,6 +19,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,12 +34,11 @@ class CategoryEntityServiceTest {
     @InjectMocks
     private CategoryService categoryService;
 
-    private CategoryEntity sampleCategory;
+    private CategoryDto sampleCategory;
 
     @BeforeEach
     void setUp() {
-        sampleCategory = new CategoryEntity(1L, "Electronics", "electronics", "desc",
-                Instant.now(), Instant.now());
+        sampleCategory = new CategoryDto(1L, "Electronics", "electronics", "desc");
     }
 
     @Test
@@ -53,13 +56,31 @@ class CategoryEntityServiceTest {
 
     @Test
     void getCategory_ShouldReturnSingleCategory() {
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(sampleCategory));
+        when(categoryRepository.findById(1L)).thenReturn(Optional.<CategoryEntity>of(sampleCategory));
 
         CategoryEntity result = categoryService.getCategory(1L);
 
         assertNotNull(result);
         assertEquals("Electronics", result.getName());
         verify(categoryRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void updateCategory_ShouldUpdateFields() {
+        CategoryDto updatedCategory = new CategoryDto(
+                null, "New Name", "new-slug", "New description");
+
+        Mockito.when(categoryRepository.findById(1L))
+                .thenReturn(Optional.of(sampleCategory));
+        Mockito.when(categoryRepository.save(any(CategoryEntity.class)))
+                .thenAnswer(inv -> inv.getArgument(0));
+
+        CategoryEntity result = categoryService.updateCategory(1L, (CategoryDto) updatedCategory);
+
+        assertEquals("New Name", result.getName());
+        assertEquals("new-slug", result.getSlug());
+        assertEquals("New description", result.getDescription());
+        Mockito.verify(categoryRepository, times(1)).save(any(CategoryEntity.class));
     }
 
     @Test
