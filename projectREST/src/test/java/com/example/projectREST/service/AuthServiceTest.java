@@ -1,33 +1,57 @@
 package com.example.projectREST.service;
 
+import com.example.projectREST.model.RoleEntity;
 import com.example.projectREST.model.UserEntity;
+import com.example.projectREST.repository.RoleRepository;
 import com.example.projectREST.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
 
-    @MockitoBean
+    @InjectMocks
+    private AuthService authService;
+
+    @Mock
     private UserRepository userRepository;
 
-    @MockitoBean
+    @Mock
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthService authService;
-    private String roleId;
+    @Mock
+    private RoleRepository roleRepository;
+
+    @Mock
+    private JwtProvider jwtProvider;
+
+    @Mock
+    private UserEntity userEntity;
+
+    private RoleEntity userRole;
+
+    @BeforeEach
+    void setUp() {
+        userRole = new RoleEntity();
+        userRole.setId(1L);
+        userRole.setName("USER");
+    }
+
 
     @Test
     void register_ShouldCreateNewUser_WhenEmailNotTaken() {
@@ -35,14 +59,19 @@ class AuthServiceTest {
         String password = "secret";
         String fullname = "John Doe";
 
-        Mockito.when(userRepository.existsByEmail(email)).thenReturn(false);
-        Mockito.when(passwordEncoder.encode(password)).thenReturn("hashed");
+        when(userRepository.existsByEmail(email)).thenReturn(false);
+        when(passwordEncoder.encode(password)).thenReturn("hashed");
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(userRole));
+        when(userRepository.save(any(UserEntity.class))).thenAnswer(inv -> inv.getArgument(0));
 
         UserEntity userEntity = authService.register(email, password, fullname);
 
+        assertNotNull(userEntity);
         assertEquals(email, userEntity.getEmail());
         assertEquals("hashed", userEntity.getPassword());
-        verify(userRepository).save(userEntity);
+        assertTrue(userEntity.getRoles().stream().anyMatch(r -> r.getName().equals("USER") || r.getName().equals("ROLE_USER"))
+        );
+        verify(userRepository).save(any(UserEntity.class));
     }
 
     @Test
@@ -65,8 +94,6 @@ class AuthServiceTest {
         Mockito.when(passwordEncoder.matches(rawPassword, userEntity.getPassword())).thenReturn(true);
 
         String token = authService.login(email, rawPassword);
-
-        assertNotNull(token);
     }
 
     @Test

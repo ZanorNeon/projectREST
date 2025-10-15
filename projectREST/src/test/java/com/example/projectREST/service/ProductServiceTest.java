@@ -24,7 +24,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class ProductEntityServiceTest {
+class ProductServiceTest {
 
     @Mock
     private ProductRepository productRepository;

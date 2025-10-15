@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CategoryController.class)
 @AutoConfigureMockMvc(addFilters = false)
-class CategoryEntityControllerTest {
+class CategoryControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
