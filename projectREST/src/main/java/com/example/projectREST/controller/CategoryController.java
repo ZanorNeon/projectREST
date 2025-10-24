@@ -4,6 +4,7 @@ package com.example.projectREST.controller;
 import com.example.projectREST.dto.CategoryDto;
 import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.service.CategoryService;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,6 +34,7 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
+    @PermitAll
     @GetMapping("/{id}")
     public CategoryEntity getCategory(@PathVariable Long id) {
         return categoryService.getCategory(id);

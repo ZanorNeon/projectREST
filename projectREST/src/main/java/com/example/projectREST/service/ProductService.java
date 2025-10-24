@@ -6,10 +6,8 @@ import com.example.projectREST.model.CategoryEntity;
 import com.example.projectREST.model.ProductEntity;
 import com.example.projectREST.repository.CategoryRepository;
 import com.example.projectREST.repository.ProductRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -33,9 +31,10 @@ public class ProductService {
                                            BigDecimal maxPrice,
                                            Long categoryId,
                                            Boolean active,
-                                           String q,
-                                           Pageable pageable) {
-        var products = productRepository.findAll(ProductRepository.filter(minPrice, maxPrice, categoryId, active, q), pageable);
+                                           String q
+    ) {
+
+        var products = productRepository.findAll(ProductRepository.filter(minPrice, maxPrice, categoryId, active, q));
         return products.stream().toList();
     }
 

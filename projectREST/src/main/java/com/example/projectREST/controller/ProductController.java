@@ -3,8 +3,8 @@ package com.example.projectREST.controller;
 import com.example.projectREST.dto.ProductDto;
 import com.example.projectREST.model.ProductEntity;
 import com.example.projectREST.service.ProductService;
+import jakarta.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -38,10 +37,11 @@ public class ProductController {
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) Boolean active,
-            @RequestParam(required = false) String q,
-            Pageable pageable) {
-        return productService.getProducts(minPrice, maxPrice, categoryId, active, q, pageable);
+            @RequestParam(required = false) String q) {
+        return productService.getProducts(minPrice, maxPrice, categoryId, active, q);
     }
+
+    @PermitAll
     @GetMapping("/{id}")
     public ProductEntity getProduct(@PathVariable Long id) {
         return productService.getProduct(id);

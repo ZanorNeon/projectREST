@@ -55,7 +55,7 @@ class ProductControllerTest {
     @Test
     void getAllProducts_ShouldReturnList() throws Exception {
         Mockito.when(productService.getProducts(
-                        any(), any(), any(), any(), any(), any(Pageable.class)))
+                        any(), any(), any(), any(), any()))
                 .thenReturn(List.of(sampleProduct));
 
         mockMvc.perform(get("/api/products")
