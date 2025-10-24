@@ -56,13 +56,13 @@ class ProductControllerTest {
     void getAllProducts_ShouldReturnList() throws Exception {
         Mockito.when(productService.getProducts(
                         any(), any(), any(), any(), any(), any(Pageable.class)))
-                .thenReturn(new PageImpl<>(List.of(sampleProduct)));
+                .thenReturn(List.of(sampleProduct));
 
         mockMvc.perform(get("/api/products")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content.size()", is(1)))
-                .andExpect(jsonPath("$.content[0].name", is("Phone")));
+                .andExpect(jsonPath("$.size()", is(1)))
+                .andExpect(jsonPath("$[0].name", is("Phone")));
     }
 
     @Test

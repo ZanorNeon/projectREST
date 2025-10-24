@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long>, JpaSpecificationExecutor<ProductEntity> {
+
     static Specification<ProductEntity> filter(BigDecimal minPrice, BigDecimal maxPrice, Long categoryId, Boolean active, String q) {
         return null;
     }

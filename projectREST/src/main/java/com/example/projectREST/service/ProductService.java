@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -28,13 +29,14 @@ public class ProductService {
         this.productMapper = productMapper;
     }
 
-    public Page<ProductEntity> getProducts(BigDecimal minPrice,
+    public List<ProductEntity> getProducts(BigDecimal minPrice,
                                            BigDecimal maxPrice,
                                            Long categoryId,
                                            Boolean active,
                                            String q,
                                            Pageable pageable) {
-        return productRepository.findAll(ProductRepository.filter(minPrice, maxPrice, categoryId, active, q), pageable);
+        var products = productRepository.findAll(ProductRepository.filter(minPrice, maxPrice, categoryId, active, q), pageable);
+        return products.stream().toList();
     }
 
     public ProductEntity getProduct(Long id) {
